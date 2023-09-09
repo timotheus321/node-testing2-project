@@ -1,8 +1,8 @@
-// express = require('express')
-// const server = express()
-// const jokesRouter = require('./api/jokesRouter.js')
+express = require('express')
+const server = express()
+const jokesRouter = require('./api/jokesRouter.js')
 
-// server.use(expres.json())
-// server.use('/jokes', jokesRouter)
+server.use(expres.json())
+server.use('/jokes', jokesRouter)
 
-// module.exports = server
+module.exports = server
