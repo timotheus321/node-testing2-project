@@ -40,6 +40,7 @@ describe('Jokes model functions', () => {
             expect(joke).toMatchObject({joke_id:1, ...joke})
         })
     })
+    
     describe('[Delete] / - deletle joke', () => {
         it('removes joke from db', async () => {
            const [joke_id] = await db('jokes').insert(joke1)
@@ -55,4 +56,22 @@ describe('Jokes model functions', () => {
             expect(joke.body).toMatchObject(joke1)
         })
     })
+    describe('POST / - Create joke', () => {
+
+        it('should return 201 when joke is created', async () => {
+            const newJoke = { joke: 'Why did the chicken cross the road?', punchline: 'To get to the other side!' };
+            const res = await request(server).post('/jokes').send(newJoke);
+            expect(res.status).toBe(201);
+            expect(res.body.joke).toBe(newJoke.joke);
+            expect(res.body.punchline).toBe(newJoke.punchline);
+        });
+
+        it('should return 400 when joke or punchline is missing', async () => {
+            const newJoke = { joke: 'Why did the chicken cross the road?' };
+            const res = await request(server).post('/jokes').send(newJoke);
+            expect(res.status).toBe(400);
+            expect(res.body.message).toBe("Joke and punchline are required fields.");
+        });
+
+    });
 })

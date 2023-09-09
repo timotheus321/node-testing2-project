@@ -10,7 +10,11 @@ async function deleteJoke(id) {
     await db('jokes').where('joke_id', id).del()
     return joke
 }
+
+
+
 module.exports = {
     createJoke,
-    deleteJoke
+    deleteJoke,
+   
 }

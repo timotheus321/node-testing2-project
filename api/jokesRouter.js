@@ -2,7 +2,15 @@ const express = require('express');
 const router = express.Router();
 const Joke = require('./jokesModel')
 
-router.post('/', async (req, res) => {
+function validateJoke(req, res, next) {
+    const { joke, punchline } = req.body;
+    if (!joke || !punchline) {
+        return res.status(400).json({ message: "Joke and punchline are required fields." });
+    }
+    next();
+}
+
+router.post('/', validateJoke, async (req, res) => {
     const jokeData = req.body;
     try {
         const newJoke = await Joke.createJoke(jokeData);
